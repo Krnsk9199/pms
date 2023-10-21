@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,5 +61,11 @@ public class UserServiceImpl implements UserService {
         }
         message.setMessage("user not found with the given name");
         return message;
+    }
+
+    @Override
+    public List<PmsUser> viewUser() {
+        List<PmsUser> allUsers = userRepository.findAll();
+        return allUsers;
     }
 }

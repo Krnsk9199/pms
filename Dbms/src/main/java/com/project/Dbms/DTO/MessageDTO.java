@@ -9,6 +9,6 @@ import lombok.ToString;
 public class MessageDTO {
     private String message;
     private String status;
-    private String data;
+    private Object data;
 
 }
