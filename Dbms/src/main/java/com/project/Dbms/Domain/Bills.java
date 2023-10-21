@@ -15,8 +15,11 @@ import java.util.Date;
 public class Bills {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bill_id")
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "bill_id")
+    private Long billId;
 
     @Column(name = "bill_date")
     private Date date;
@@ -26,8 +29,4 @@ public class Bills {
 
     @Column(name = "total_paid")
     private Integer totalPaid;
-
-//    @ManyToOne
-//    @JoinColumn(name = "", referencedColumnName = "aut_id")
-//    private User bok_aut_id;
 }

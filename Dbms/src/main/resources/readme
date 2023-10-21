@@ -1,17 +1,15 @@
 List of APIs
 
-1. Add medicine
-2. Remove medicine
+1. Add medicine -- done
+2. Remove medicine -- done
 3. Update profile
-4. Login Api
-5. Update medicine
-6. Search Medicine
-7. Total Price
-8. Total no of units
+4. Login Api  -- done
+5. Update medicine -- done
+6. Search Medicine -- done
 9. Purchase and Print
-10. View Bill 
+10. View Bills -- done
 11. Add User -- done
 12. Remove User -- done
 13. View User -- done
 14. Fetch Profile
-15. View medicine
+15. View medicine -- done
