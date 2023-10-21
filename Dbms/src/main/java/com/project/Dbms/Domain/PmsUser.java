@@ -24,10 +24,10 @@ public class PmsUser {
     private String role;
 
     @Column(name = "date_of_birth")
-    private String dateOfBirth;
+    private String dob;
 
     @Column(name = "mobile")
-    private String mobileNumber;
+    private String mobile;
 
     @Column(name = "email")
     private String email;
