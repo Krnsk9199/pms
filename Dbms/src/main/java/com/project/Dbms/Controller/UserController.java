@@ -29,14 +29,10 @@ public class UserController {
         return message;
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/remove")
     public  Object deleteUser(@RequestBody UserDTO userDTO){
-        userService.deleteUser(userDTO);
-        MessageDTO message = new MessageDTO();
-        message.setData(null);
-        message.setMessage(userDTO.getName() +" deleted successfully");
-        message.setStatus("success");
-        return message;
+       MessageDTO message =  userService.deleteUser(userDTO);
+       return message;
     }
 
 
