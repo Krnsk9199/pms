@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(UserDTO userDTO) {
 
-        log.info("Adding a new User");
+        log.info("------------> Adding a new User <----------------");
         PmsUser newUser = new PmsUser();
         newUser.setRole(userDTO.getRole());
         newUser.setName(userDTO.getName());
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(userDTO.getPassword());
         newUser.setDob(userDTO.getDob());
         userRepository.save(newUser);
-        log.info(userDTO.getName() + "successfully added");
+        log.info("------------->" + userDTO.getName() + " successfully added <------------");
 
     }
 
