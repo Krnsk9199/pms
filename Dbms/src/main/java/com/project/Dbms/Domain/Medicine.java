@@ -15,8 +15,11 @@ public class Medicine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "med_id")
+    @Column(name = "ID")
     private Long id;
+
+    @Column(name = "med_id")
+    private Long medId;
 
     @Column(name = "med_quantity")
     private Integer quantity;
@@ -28,7 +31,7 @@ public class Medicine {
     private Integer pricePerUnit;
 
     @Column(name = "med_company_name")
-    private Integer companyName;
+    private String companyName;
 
 
 }
