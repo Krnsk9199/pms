@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,10 +20,10 @@ public class Bills {
     private Long id;
 
     @Column(name = "bill_id")
-    private Long billId;
+    private String billId;
 
     @Column(name = "bill_date")
-    private Date date;
+    private LocalDate date;
 
     @Column(name = "generate_by")
     private String generateBy;

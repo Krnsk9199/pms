@@ -1,8 +1,6 @@
 package com.project.Dbms.Controller;
 
-import com.project.Dbms.DTO.BillDTO;
-import com.project.Dbms.DTO.LoginDTO;
-import com.project.Dbms.DTO.MessageDTO;
+import com.project.Dbms.DTO.*;
 import com.project.Dbms.Domain.Bills;
 import com.project.Dbms.Domain.Medicine;
 import com.project.Dbms.Service.BillService;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @RestController
@@ -32,6 +31,14 @@ public class BillController {
         message.setMessage("All bills fetched successfully");
         message.setStatus("success");
         return message;
+    }
+
+    @PostMapping("/printBill")
+    public void printBill(@RequestBody Object request) {
+           List<MedicineDTO> medicines = (List<MedicineDTO>) ((LinkedHashMap) request).get("list");
+           Integer totalPaid = (Integer) ((LinkedHashMap) request).get("totalPaid");
+           String generatedBy = (String) ((LinkedHashMap) request).get("name");
+           billService.purchaseAndPrint(medicines,generatedBy,totalPaid);
     }
 
 }
