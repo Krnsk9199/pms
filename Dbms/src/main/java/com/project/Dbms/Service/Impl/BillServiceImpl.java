@@ -16,7 +16,9 @@ import com.itextpdf.layout.property.UnitValue;
 import com.project.Dbms.DTO.MedicineDTO;
 import com.project.Dbms.Domain.Bills;
 
+import com.project.Dbms.Domain.Medicine;
 import com.project.Dbms.Repository.BillRepository;
+import com.project.Dbms.Repository.MedicineRepository;
 import com.project.Dbms.Service.BillService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.SplittableRandom;
 import java.util.stream.Stream;
 
@@ -35,6 +38,9 @@ public class BillServiceImpl implements BillService {
 
     @Autowired
     private BillRepository billRepository;
+
+    @Autowired
+    private MedicineRepository medicineRepository;
     @Override
     public List<Bills> viewBills() {
      return billRepository.findAll();
@@ -72,8 +78,7 @@ public class BillServiceImpl implements BillService {
             document.add(date);
 
             Paragraph totalPaidPara = new Paragraph()
-                    .add(new Text("Total Paid : " + totalPaid))
-                    .add(new Text(dest));
+                    .add(new Text("Total Paid : " + totalPaid));
             totalPaidPara.setFont(font).setFontSize(8);
             document.add(totalPaidPara);
 
@@ -142,9 +147,11 @@ public class BillServiceImpl implements BillService {
             table.addCell(new Cell()
                     .add(new Paragraph(new Text(med.getPricePerUnit().toString())))
                     .setFontSize(8));
+
             table.addCell(new Cell()
                     .add(new Paragraph(new Text(med.getQuantity().toString())))
                     .setFontSize(8));
+            updateQuantity(med.getMedId(), med.getQuantity());
 
             Integer subTotalPrice = med.getQuantity()*med.getPricePerUnit();
             table.addCell(new Cell().add(new Paragraph(new Text((subTotalPrice.toString()))))
@@ -174,5 +181,14 @@ public class BillServiceImpl implements BillService {
         bill.setTotalPaid(totalPaid);
         billRepository.save(bill);
 
+    }
+
+    private void updateQuantity(Long medId, Integer quantity){
+        Optional<Medicine> medicineOptional =  medicineRepository.findByMedId(medId);
+        if(medicineOptional.isPresent()){
+            Medicine med = medicineOptional.get();
+            med.setQuantity(med.getQuantity()-quantity);
+            medicineRepository.save(med);
+        }
     }
 }
