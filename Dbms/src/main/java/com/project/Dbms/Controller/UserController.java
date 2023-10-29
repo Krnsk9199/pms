@@ -48,4 +48,15 @@ public class UserController {
         return message;
     }
 
+
+    @PostMapping("/update")
+    public  Object updateUser(@RequestBody UserDTO userDTO){
+        userService.updatedUser(userDTO);
+        MessageDTO message = new MessageDTO();
+        message.setData(null);
+        message.setMessage("User updated successfully");
+        message.setStatus("success");
+        return message;
+    }
+
 }

@@ -13,4 +13,6 @@ public interface UserService {
     MessageDTO deleteUser(UserDTO userDTO);
 
     List<PmsUser> viewUser();
+
+    void updatedUser(UserDTO userDTO);
 }

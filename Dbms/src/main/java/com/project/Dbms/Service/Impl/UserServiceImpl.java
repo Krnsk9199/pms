@@ -68,4 +68,25 @@ public class UserServiceImpl implements UserService {
         List<PmsUser> allUsers = userRepository.findAll();
         return allUsers;
     }
+
+    @Override
+    public void updatedUser(UserDTO userDTO) {
+        Long id = userDTO.getId();
+        Optional<PmsUser> pmsUserOptional = userRepository.findById(id);
+        if(pmsUserOptional.isPresent()){
+            PmsUser user = pmsUserOptional.get();
+            user.setName(userDTO.getName());
+            user.setMobile(userDTO.getMobile());
+            user.setDob(userDTO.getDob());
+            user.setRole(userDTO.getRole());
+            user.setEmail(userDTO.getEmail());
+            user.setAddress(userDTO.getAddress());
+            user.setPassword(userDTO.getPassword());
+            userRepository.save(user);
+
+            log.info(userDTO.getName() +"updated successfully");
+        }
+        log.info(userDTO.getId() + "not present in the database");
+
+    }
 }
