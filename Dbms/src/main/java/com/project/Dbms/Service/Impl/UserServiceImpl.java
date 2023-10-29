@@ -82,11 +82,12 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userDTO.getEmail());
             user.setAddress(userDTO.getAddress());
             user.setPassword(userDTO.getPassword());
+            user.setUsername(userDTO.getUsername());
             userRepository.save(user);
 
             log.info(userDTO.getName() +"updated successfully");
         }
-        log.info(userDTO.getId() + "not present in the database");
+       
 
     }
 }

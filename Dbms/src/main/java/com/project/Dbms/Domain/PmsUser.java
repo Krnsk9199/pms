@@ -3,6 +3,7 @@ package com.project.Dbms.Domain;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity

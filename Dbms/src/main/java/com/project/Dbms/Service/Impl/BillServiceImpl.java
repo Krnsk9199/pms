@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.SplittableRandom;
@@ -46,7 +47,7 @@ public class BillServiceImpl implements BillService {
      return billRepository.findAll();
     }
 
-    private void createPdf(String dest, List<MedicineDTO> medBought,Integer totalPaid){
+    private void createPdf(String dest, List<LinkedHashMap> medBought,Integer totalPaid){
 
         try (PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest))) {
             pdfDoc.addNewPage();
@@ -126,35 +127,39 @@ public class BillServiceImpl implements BillService {
 
         }
         catch (Exception e){
-
+            log.error(e.getMessage());
         }
 
     }
 
 
 
-    private void addRows(Table table,List<MedicineDTO> medicines) {
-        for(MedicineDTO med : medicines){
+    private void addRows(Table table,List<LinkedHashMap> medicines) {
+
+        for(LinkedHashMap med : medicines){
             table.addCell(new Cell()
-                    .add(new Paragraph(new Text(med.getMedId().toString())))
+                    .add(new Paragraph(new Text(med.get("medId").toString())))
                     .setFontSize(8));
             table.addCell(new Cell()
-                    .add(new Paragraph(new Text(med.getName())))
+                    .add(new Paragraph(new Text(med.get("name").toString())))
                     .setFontSize(8));
             table.addCell(new Cell()
-                    .add(new Paragraph(new Text(med.getCompanyName())))
+                    .add(new Paragraph(new Text(med.get("companyName").toString())))
                     .setFontSize(8));
             table.addCell(new Cell()
-                    .add(new Paragraph(new Text(med.getPricePerUnit().toString())))
+                    .add(new Paragraph(new Text(med.get("pricePerUnit").toString())))
                     .setFontSize(8));
 
             table.addCell(new Cell()
-                    .add(new Paragraph(new Text(med.getQuantity().toString())))
+                    .add(new Paragraph(new Text(med.get("quantity").toString())))
                     .setFontSize(8));
-            updateQuantity(med.getMedId(), med.getQuantity());
+            updateQuantity(Long.valueOf(med.get("medId").toString()), (Integer) med.get("quantity"));
 
-            Integer subTotalPrice = med.getQuantity()*med.getPricePerUnit();
-            table.addCell(new Cell().add(new Paragraph(new Text((subTotalPrice.toString()))))
+            Integer quantity= (Integer) med.get("quantity");
+            Integer pricePerUnit = (Integer)med.get("pricePerUnit");
+            Integer subtotal = quantity*pricePerUnit;
+
+            table.addCell(new Cell().add(new Paragraph(new Text(subtotal.toString())))
                     .setFontSize(8));
         }
 
@@ -171,7 +176,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void purchaseAndPrint(List<MedicineDTO> medicines, String name, Integer totalPaid) {
+    public void purchaseAndPrint(List<LinkedHashMap> medicines, String name, Integer totalPaid) {
         String fileName = "Bill-"+generate(15);
         createPdf(fileName,medicines,totalPaid);
         Bills bill = new Bills();

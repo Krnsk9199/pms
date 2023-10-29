@@ -24,7 +24,7 @@ public class BillController {
     private BillService billService;
 
     @PostMapping("/view")
-    public Object viewBills(){
+    public Object viewBills() {
         List<Bills> medicines = billService.viewBills();
         MessageDTO message = new MessageDTO();
         message.setData(medicines);
@@ -34,11 +34,19 @@ public class BillController {
     }
 
     @PostMapping("/printBill")
-    public void printBill(@RequestBody Object request) {
-           List<MedicineDTO> medicines = (List<MedicineDTO>) ((LinkedHashMap) request).get("list");
-           Integer totalPaid = (Integer) ((LinkedHashMap) request).get("totalPaid");
-           String generatedBy = (String) ((LinkedHashMap) request).get("name");
-           billService.purchaseAndPrint(medicines,generatedBy,totalPaid);
+    public Object printBill(@RequestBody Object request) {
+        List<LinkedHashMap> medicines = (List<LinkedHashMap>) ((LinkedHashMap) request).get("list");
+        Integer totalPaid = (Integer) ((LinkedHashMap) request).get("totalPaid");
+        String generatedBy = (String) ((LinkedHashMap) request).get("name");
+        billService.purchaseAndPrint(medicines, generatedBy, totalPaid);
+
+        MessageDTO message = new MessageDTO();
+        message.setData(null);
+        message.setMessage("Bills printed and saved successfully");
+        message.setStatus("success");
+        return message;
+
+
     }
 
 }
