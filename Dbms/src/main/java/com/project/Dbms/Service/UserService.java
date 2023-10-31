@@ -1,5 +1,6 @@
 package com.project.Dbms.Service;
 
+import com.project.Dbms.DTO.MedicineDTO;
 import com.project.Dbms.DTO.MessageDTO;
 import com.project.Dbms.DTO.UserDTO;
 import com.project.Dbms.Domain.PmsUser;
@@ -15,4 +16,6 @@ public interface UserService {
     List<PmsUser> viewUser();
 
     void updatedUser(UserDTO userDTO);
+
+    MessageDTO search(UserDTO userDTO);
 }

@@ -12,4 +12,5 @@ public interface MedicineService {
     List<Medicine> viewMedicines();
     MessageDTO search(Long medId);
     MessageDTO updateMedicine(MedicineDTO medicineDTO);
+
 }

@@ -90,4 +90,21 @@ public class UserServiceImpl implements UserService {
        
 
     }
+
+    @Override
+    public MessageDTO search(UserDTO userDTO) {
+        Optional<PmsUser> userOptional = userRepository.findById(userDTO.getId());
+        MessageDTO message = new MessageDTO();
+        message.setData(null);
+        message.setMessage(userDTO.getName() +" details fetched successfully");
+        message.setStatus("success");
+
+        if(userOptional.isPresent()){
+            message.setData(userOptional.get());
+            return message;
+        }
+        message.setMessage("No user found");
+        return message;
+
+    }
 }

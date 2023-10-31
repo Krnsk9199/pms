@@ -1,5 +1,6 @@
 package com.project.Dbms.Controller;
 
+import com.project.Dbms.DTO.MedicineDTO;
 import com.project.Dbms.DTO.MessageDTO;
 import com.project.Dbms.DTO.UserDTO;
 import com.project.Dbms.Domain.PmsUser;
@@ -59,4 +60,9 @@ public class UserController {
         return message;
     }
 
+    @PostMapping("/search")
+    public  Object searchMedicine(@RequestBody UserDTO userDTO){
+        MessageDTO message = userService.search(userDTO);
+        return message;
+    }
 }
